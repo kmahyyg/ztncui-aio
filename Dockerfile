@@ -22,8 +22,8 @@ RUN apt update -y && \
 # BUILD GO UTILS
 FROM golang:buster AS argong
 WORKDIR /buildsrc
-COPY argon2g ./
-COPY fileserv ./
+COPY argon2g /buildsrc/argon2g
+COPY fileserv /buildsrc/fileserv
 RUN mkdir -p binaries && \
     cd argon2g && \
     go mod download && \
