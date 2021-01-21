@@ -49,14 +49,14 @@ mkdir -p /opt/key-networks/ztncui/etc/myfs # for planet files
 if [ ! -f /opt/key-networks/ztncui/etc/passwd ]; then
     echo "Default Password File Not Exists... Generating..."
     cd /opt/key-networks/ztncui/etc
-    echo $ZTNCUI_PASSWD | /usr/bin/argon2g 
+    echo $ZTNCUI_PASSWD | /usr/local/bin/argon2g 
     cd ../
 fi
 
 if [ ! -f /opt/key-networks/ztncui/etc/tls/fullchain.pem ] || [ ! -f /opt/key-networks/ztncui/etc/tls/privkey.pem ]; then
     echo "Cannot detect TLS Certs, Generating..."
     cd /opt/key-networks/ztncui/etc/tls
-    /usr/bin/minica -domains "$MYDOMAIN"
+    /usr/local/bin/minica -domains "$MYDOMAIN"
     cp -f "$MYDOMAIN/cert.pem" fullchain.pem
     cp -f "$MYDOMAIN/key.pem" privkey.pem
     cd ../../
