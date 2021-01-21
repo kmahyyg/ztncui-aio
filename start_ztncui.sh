@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd /opt/key-networks/ztncui
+
 if [ -z $MYADDR ]; then
     echo "Set Your IP Address to continue."
     echo "If you don't do that, I will automatically detect."

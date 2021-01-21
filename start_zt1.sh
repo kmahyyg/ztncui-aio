@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd /tmp
+
 # If the file not exists, mean we need to initialize
 if [ ! -f /var/lib/zerotier-one/identity.secret ] ; then 
     echo "Zerotier-One Configuration is **NOT** initialized."

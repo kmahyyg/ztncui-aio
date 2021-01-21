@@ -78,6 +78,7 @@ EXPOSE 3000/tcp
 EXPOSE 9993/udp
 EXPOSE 3180/tcp
 
+WORKDIR /
 VOLUME ["/opt/key-networks/ztncui/etc"]
 VOLUME [ "/var/lib/zerotier-one" ]
 ENTRYPOINT [ "/usr/bin/supervisord" ]
