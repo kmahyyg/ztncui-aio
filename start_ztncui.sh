@@ -40,22 +40,22 @@ else
 fi
 
 echo "ZTNCUI ENV CONFIGURATION: "
-cat ./.env
+cat /opt/key-networks/ztncui/.env
 
-mkdir -p etc/storage 
-mkdir -p etc/tls
-mkdir -p etc/myfs # for planet files
+mkdir -p /opt/key-networks/ztncui/etc/storage 
+mkdir -p /opt/key-networks/ztncui/etc/tls
+mkdir -p /opt/key-networks/ztncui/etc/myfs # for planet files
 
-if [ ! -f etc/passwd ]; then
+if [ ! -f /opt/key-networks/ztncui/etc/passwd ]; then
     echo "Default Password File Not Exists... Generating..."
-    cd etc/passwd
+    cd /opt/key-networks/ztncui/etc
     echo $ZTNCUI_PASSWD | /usr/bin/argon2g 
-    cd ../../
+    cd ../
 fi
 
-if [ ! -f etc/tls/fullchain.pem ] || [ ! -f etc/tls/privkey.pem ]; then
+if [ ! -f /opt/key-networks/ztncui/etc/tls/fullchain.pem ] || [ ! -f /opt/key-networks/ztncui/etc/tls/privkey.pem ]; then
     echo "Cannot detect TLS Certs, Generating..."
-    cd etc/tls
+    cd /opt/key-networks/ztncui/etc/tls
     /usr/bin/minica -domains "$MYDOMAIN"
     cp -f "$MYDOMAIN/cert.pem" fullchain.pem
     cp -f "$MYDOMAIN/key.pem" privkey.pem
@@ -64,7 +64,6 @@ fi
 
 chown -R zerotier-one:zerotier-one /opt/key-networks/ztncui
 chmod 0755 /opt/key-networks/ztncui/ztncui
-chown root:root /opt/key-networks/ztncui/ztncui
 
 unset ZTNCUI_PASSWD
 gosu zerotier-one:zerotier-one /opt/key-networks/ztncui/ztncui
