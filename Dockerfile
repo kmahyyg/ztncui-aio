@@ -46,7 +46,7 @@ RUN mkdir -p binaries && \
 # START RUNNER
 FROM debian:sid-slim AS runner
 RUN apt update -y && \
-    apt install curl gnupg2 ca-certificates unzip supervisor net-tools --no-install-recommends -y && \
+    apt install curl gnupg2 ca-certificates unzip supervisor net-tools procps --no-install-recommends -y && \
     curl -sL -o ztone.sh https://install.zerotier.com && \
     bash ztone.sh && \
     rm -f ztone.sh && \

@@ -3,7 +3,13 @@
 if [ -z $MYADDR ]; then
     echo "Set Your IP Address to continue."
     echo "If you don't do that, I will automatically detect."
-    MYADDR=$(curl ip.sb)
+    MYEXTADDR=$(curl --connect-timeout 5 ip.sb)
+    if [ -z $MYEXTADDR ]; then
+        MYINTADDR=$(ifconfig eth0 | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')
+        MYADDR=${MYINTADDR}
+    else
+        MYADDR=${MYEXTADDR}
+    fi
     echo "YOUR IP: ${MYADDR}"
 fi
 
