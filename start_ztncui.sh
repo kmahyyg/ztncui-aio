@@ -1,9 +1,11 @@
 #!/bin/bash
 
-if [ ! -z $MYADDR ]; then
+while [ ! -z $MYADDR ]; do
     echo "Set Your IP Address to continue."
-    exit 2
-fi
+    echo "If you don't do that, I will automatically detect."
+    MYADDR=$(curl ip.sb)
+    echo "YOUR IP: ${MYADDR}"
+done
 
 MYDOMAIN=${MYDOMAIN:-ztncui.docker.test}   # Used for minica
 ZTNCUI_PASSWD=${ZTNCUI_PASSWD:-password}   # Used for argon2g
@@ -31,8 +33,6 @@ fi
 
 echo "ZTNCUI ENV CONFIGURATION: "
 cat ./.env
-echo "CURRENT CONTAINER ENV: "
-printenv
 
 mkdir -p etc/storage 
 mkdir -p etc/tls
