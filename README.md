@@ -33,3 +33,5 @@ This image additional specific:
 | YES | MYADDR | your ip address, public ip address preferred | NO DEFAULT |
 
 Also, this image exposed an http server at port 3180, you could save file in `/mydata/ztncui/myfs/` to serve it. (You could use this to build your own root server and distribute planet file)
+
+**WARNING: IF YOU DO NOT SET PASSWORD, YOU HAVE TO USE `docker exec -it <CONTAINER NAME> bash`, and then `cat /var/log/docker-ztncui.log` to get your random password. This is gatekeeper.**

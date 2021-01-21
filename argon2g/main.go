@@ -1,12 +1,13 @@
 package main
 
 import (
-	"crypto/rand"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
+	"math/rand"
+	"os"
 
 	"golang.org/x/crypto/argon2"
 )
@@ -21,10 +22,24 @@ type PasswdDef struct {
 	Admin UserDef `json:"admin"`
 }
 
+const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+
+func RandStringBytes(n int) string {
+	b := make([]byte, n)
+	for i := range b {
+		b[i] = letterBytes[rand.Intn(len(letterBytes))] // It's not safe for password purpose, but i'm lazy.
+	}
+	return string(b)
+}
+
 func main() {
-	var password string
-	fmt.Print("Input Password: ")
-	fmt.Scanln(&password)
+	var password string = os.Getenv("ZTNCUI_PASSWD")
+	if len(password) < 2 {
+		log.Println("Current Password: " + password + " is too weak or not set...")
+		password = RandStringBytes(10)
+	} else {
+		log.Println("Current Password: " + password)
+	}
 
 	var ag2_memory uint32 = 4096
 	var ag2_iter uint32 = 3

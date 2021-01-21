@@ -49,7 +49,7 @@ mkdir -p /opt/key-networks/ztncui/etc/myfs # for planet files
 if [ ! -f /opt/key-networks/ztncui/etc/passwd ]; then
     echo "Default Password File Not Exists... Generating..."
     cd /opt/key-networks/ztncui/etc
-    echo $ZTNCUI_PASSWD | /usr/local/bin/argon2g 
+    /usr/local/bin/argon2g 
     cd ../
 fi
 
