@@ -6,8 +6,7 @@ Licensed Under AGPL v3
 ```bash
 $ git clone https://github.com/kmahyyg/ztncui-aio # if you wanna use env file, you need to clone, else not.
 $ docker pull kmahyyg/ztncui-aio
-$ docker run -d -p3000:3000 -p9993:9993 -p3180:3180\
-    --cap-add=NET_ADMIN --cap-add=SYS_ADMIN --device=/dev/net/tun \
+$ docker run -d -p3000:3000 -p9993:9993 -p3180:3180 \
     -v /mydata/ztncui:/opt/key-networks/ztncui/etc \
     -v /mydata/zt1:/var/lib/zerotier-one \
     --env-file ./denv <CHANGE HERE ACCORDING TO NEXT PART> \
