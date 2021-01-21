@@ -29,16 +29,24 @@ else
   [ ! -z $HTTPS_PORT ] && echo "HTTPS_PORT=$HTTPS_PORT" >> /opt/key-networks/ztncui/.env
 fi
 
+echo "ZTNCUI ENV CONFIGURATION: "
+cat ./.env
+echo "CURRENT CONTAINER ENV: "
+printenv
+
 mkdir -p etc/storage 
 mkdir -p etc/tls
+mkdir -p etc/myfs # for planet files
 
 if [ ! -f etc/passwd ]; then
+    echo "Default Password File Not Exists... Generating..."
     cd etc/passwd
     echo $ZTNCUI_PASSWD | /usr/bin/argon2g 
     cd ../../
 fi
 
 if [ ! -f etc/tls/fullchain.pem ] || [ ! -f etc/tls/privkey.pem ]; then
+    echo "Cannot detect TLS Certs, Generating..."
     cd etc/tls
     /usr/bin/minica -domains "$MYDOMAIN"
     cp -f "$MYDOMAIN/cert.pem" fullchain.pem
@@ -50,4 +58,5 @@ chown -R zerotier-one:zerotier-one /opt/key-networks/ztncui
 chmod 0755 /opt/key-networks/ztncui/ztncui
 chown root:root /opt/key-networks/ztncui/ztncui
 
+unset ZTNCUI_PASSWD
 gosu zerotier-one:zerotier-one /opt/key-networks/ztncui/ztncui

@@ -23,6 +23,7 @@ RUN apt update -y && \
 FROM golang:buster AS argong
 WORKDIR /buildsrc
 COPY argon2g ./
+COPY fileserv ./
 RUN mkdir -p binaries && \
     cd argon2g && \
     go mod download && \
@@ -36,7 +37,10 @@ RUN mkdir -p binaries && \
     git clone https://github.com/tianon/gosu && \
     cd gosu && \
     go mod download && \
-    go build -o ../binaries/gosu -ldflags='-s -w' -trimpath
+    go build -o ../binaries/gosu -ldflags='-s -w' -trimpath && \
+    cd .. && \
+    cd fileserv && \
+    go build -ldflags='-s -w' -trimpath -o ../binaries/fileserv main.go
 
 
 # START RUNNER
@@ -58,6 +62,7 @@ RUN unzip ./artifact.zip && \
 COPY --from=argong /buildsrc/binaries/gosu /bin/gosu
 COPY --from=argong /buildsrc/binaries/minica /usr/local/bin/minica
 COPY --from=argong /buildsrc/binaries/argon2g /usr/local/bin/argon2g
+COPY --from=argong /buildsrc/binaries/fileserv /usr/local/bin/gfileserv
 
 COPY start_zt1.sh /start_zt1.sh
 COPY start_ztncui.sh /start_ztncui.sh
@@ -66,10 +71,12 @@ COPY supervisord.conf /etc/supervisord.conf
 RUN chmod 4755 /bin/gosu && \
     chmod 0755 /usr/local/bin/minica && \
     chmod 0755 /usr/local/bin/argon2g && \
+    chmod 0755 /usr/local/bin/gfileserv && \
     chmod 0755 /start_*.sh
 
-EXPOSE 3000
-EXPOSE 9993
+EXPOSE 3000/tcp
+EXPOSE 9993/udp
+EXPOSE 3180/tcp
 
 VOLUME ["/opt/key-networks/ztncui/etc"]
 VOLUME [ "/var/lib/zerotier-one" ]
