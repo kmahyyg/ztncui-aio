@@ -37,9 +37,9 @@ func main() {
 	if len(password) < 2 {
 		log.Println("Current Password: " + password + " is too weak or not set...")
 		password = RandStringBytes(10)
-	} else {
-		log.Println("Current Password: " + password)
-	}
+	} 
+	log.Println("Current Password: " + password)
+	
 
 	var ag2_memory uint32 = 4096
 	var ag2_iter uint32 = 3
