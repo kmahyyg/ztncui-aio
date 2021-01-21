@@ -46,7 +46,7 @@ func main() {
 
 	u1 := UserDef{
 		Name:    "admin",
-		PassSet: true,
+		PassSet: false,
 		Hash:    finalhash,
 	}
 	p1 := PasswdDef{
