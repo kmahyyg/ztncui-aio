@@ -2,7 +2,9 @@ FROM debian:sid-slim AS builder
 ENV NODEJS_MAJOR=14
 
 ARG DEBIAN_FRONTEND=noninteractive
-LABEL MAINTAINER="kmahyyg <spam@kmahyyg.xyz>"
+LABEL MAINTAINER="Key Networks https://key-networks.com"
+LABEL Description="ztncui (a ZeroTier network controller user interface) + ZeroTier network controller"
+ADD VERSION .
 
 # BUILD ZTNCUI IN FIRST STAGE
 WORKDIR /build
@@ -47,6 +49,8 @@ RUN mkdir -p binaries && \
 FROM debian:sid-slim AS runner
 RUN apt update -y && \
     apt install curl gnupg2 ca-certificates unzip supervisor net-tools procps --no-install-recommends -y && \
+    groupadd -g 2222 zerotier-one && \
+    useradd -u 2222 -g 2222 zerotier-one && \
     curl -sL -o ztone.sh https://install.zerotier.com && \
     bash ztone.sh && \
     rm -f ztone.sh && \
@@ -77,6 +81,8 @@ RUN chmod 4755 /bin/gosu && \
 EXPOSE 3000/tcp
 EXPOSE 9993/udp
 EXPOSE 3180/tcp
+EXPOSE 8000/tcp
+EXPOSE 3443/tcp
 
 WORKDIR /
 VOLUME ["/opt/key-networks/ztncui/etc"]
