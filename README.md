@@ -1,16 +1,29 @@
 # ztncui-aio
+## ZeroTier network controller user interface in a Docker container
 
-Licensed Under AGPL v3
+This is to build a Docker image that contains **[ZeroTier One](https://www.zerotier.com/download.shtml)** and **[ztncui](https://key-networks.com/ztncui)** to set up a **standalone ZeroTier network controller** with a web user interface in a container.
+
+Follow us on [![alt @key_networks on Twitter](https://i.imgur.com/wWzX9uB.png)](https://twitter.com/key_networks)
+
+Licensed Under GNU GPLv3
+
+## Credit
+Thanks to @kmahyyg for https://github.com/kmahyyg/ztncui-aio from which this build process is forked.
+
+## Further information
+Refer to https://github.com/key-networks/ztncui-containerized for the original documentation.
+
 ## Usage
 
 ```bash
-$ git clone https://github.com/kmahyyg/ztncui-aio # if you wanna use env file, you need to clone, else not.
-$ docker pull kmahyyg/ztncui-aio
-$ docker run -d -p3000:3000 -p9993:9993 -p3180:3180 \
+$ git clone https://github.com/key-networks/ztncui-aio # to get a copy of denv file, otherwise make your own
+$ docker pull keynetworks/ztncui
+$ docker run -d -p3443:3443 -p3180:3180 \
     -v /mydata/ztncui:/opt/key-networks/ztncui/etc \
     -v /mydata/zt1:/var/lib/zerotier-one \
     --env-file ./denv <CHANGE HERE ACCORDING TO NEXT PART> \
-    kmahyyg/ztncui-aio
+    --name ztncui \
+    keynetworks/ztncui
 ```
 
 ## Supported Configuration via persistent storage
