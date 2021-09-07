@@ -13,6 +13,13 @@ Thanks to @kmahyyg for https://github.com/kmahyyg/ztncui-aio from which this bui
 ## Further information
 Refer to https://github.com/key-networks/ztncui-containerized for the original documentation.
 
+## Build yourself
+
+```bash
+$ git clone https://github.com/key-networks/ztncui-aio
+$ docker build . -t keynetworks/ztncui:latest
+```
+
 ## Usage
 
 ```bash

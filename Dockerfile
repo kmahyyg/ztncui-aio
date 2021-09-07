@@ -1,4 +1,4 @@
-FROM debian:sid-slim AS builder
+FROM debian:buster-slim AS builder
 ENV NODEJS_MAJOR=14
 
 ARG DEBIAN_FRONTEND=noninteractive
@@ -46,7 +46,7 @@ RUN mkdir -p binaries && \
 
 
 # START RUNNER
-FROM debian:sid-slim AS runner
+FROM debian:buster-slim AS runner
 RUN apt update -y && \
     apt install curl gnupg2 ca-certificates unzip supervisor net-tools procps --no-install-recommends -y && \
     groupadd -g 2222 zerotier-one && \
@@ -72,7 +72,7 @@ COPY start_zt1.sh /start_zt1.sh
 COPY start_ztncui.sh /start_ztncui.sh
 COPY supervisord.conf /etc/supervisord.conf
 
-RUN chmod 4755 /bin/gosu && \
+RUN chmod 0755 /bin/gosu && \
     chmod 0755 /usr/local/bin/minica && \
     chmod 0755 /usr/local/bin/argon2g && \
     chmod 0755 /usr/local/bin/gfileserv && \
