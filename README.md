@@ -33,6 +33,8 @@ $ docker run -d -p3443:3443 -p3180:3180 \
     keynetworks/ztncui
 ```
 
+If their one is not updated, try `docker pull ghcr.io/kmahyyg/ztncui-aio:latest` ! (YES, We Love GitHub!)
+
 ## Supported Configuration via persistent storage
 
 For ZTNCUI: https://github.com/key-networks/ztncui
