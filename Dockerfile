@@ -1,5 +1,5 @@
 FROM debian:buster-slim AS builder
-ENV NODEJS_MAJOR=14
+ENV NODEJS_MAJOR=16
 
 ARG DEBIAN_FRONTEND=noninteractive
 LABEL MAINTAINER="Key Networks https://key-networks.com"
