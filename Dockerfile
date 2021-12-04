@@ -1,5 +1,5 @@
 FROM debian:buster-slim AS builder
-ENV NODEJS_MAJOR=16
+ENV NODEJS_MAJOR=14
 
 ARG DEBIAN_FRONTEND=noninteractive
 LABEL MAINTAINER="Key Networks https://key-networks.com"
@@ -10,7 +10,7 @@ ADD VERSION .
 WORKDIR /build
 RUN apt update -y && \
     apt install curl gnupg2 ca-certificates zip unzip build-essential git --no-install-recommends -y && \
-    curl -sL -o node_lts.sh https://deb.nodesource.com/setup_lts.x && \
+    curl -sL -o node_lts.sh https://deb.nodesource.com/setup_14.x && \
     bash node_lts.sh && \
     apt install -y nodejs --no-install-recommends && \
     rm -f node_lts.sh && \
