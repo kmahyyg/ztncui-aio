@@ -20,6 +20,8 @@ $ git clone https://github.com/key-networks/ztncui-aio
 $ docker build . -t keynetworks/ztncui:latest
 ```
 
+Do NOT change `NODEJS_MAJOR` variable in Dockerfile, or change it together with the environment installation script, make sure both environment and packer version is corresponding.
+
 ## Usage
 
 ```bash
