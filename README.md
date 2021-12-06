@@ -49,7 +49,7 @@ For ZTNCUI: https://github.com/key-networks/ztncui
 |  no  | HTTPS_HOST | Only Listen on HTTPS_HOST:HTTPS_PORT | NO DEFAULT |
 | no | HTTPS_PORT | HTTPS_PORT | 3443 |
 | no | HTTP_PORT | HTTP_PORT | 3000 |
-| no | HTTP_ALL_INTERFACES | Listen on all interfaces | NO DEFAULT |
+| no | HTTP_ALL_INTERFACES | Listen on all interfaces, useful for reverse proxy, HTTP only | NO DEFAULT |
 
 This image additional specific:
 
