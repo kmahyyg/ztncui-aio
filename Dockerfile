@@ -22,7 +22,7 @@ RUN apt update -y && \
     zip -r /build/artifact.zip ztncui node_modules/argon2/build/Release
 
 # BUILD GO UTILS
-FROM golang:buster AS argong
+FROM golang:bullseye AS argong
 WORKDIR /buildsrc
 COPY argon2g /buildsrc/argon2g
 COPY fileserv /buildsrc/fileserv
