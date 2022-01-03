@@ -51,7 +51,9 @@ For ZTNCUI: https://github.com/key-networks/ztncui
 | no | HTTP_PORT | HTTP_PORT | 3000 |
 | no | HTTP_ALL_INTERFACES | Listen on all interfaces, useful for reverse proxy, HTTP only | NO DEFAULT |
 
-This image additional specific:
+Note: If you do not set `HTTP_ALL_INTERFACES`, the 3000 port will only get listened inside container.
+
+This image additional specified details:
 
 | REQUIRED | Name | Explanation | Default Value |
 |:--------:|:--------:|:--------:|:--------:|
