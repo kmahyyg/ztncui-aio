@@ -1,5 +1,5 @@
 FROM debian:bullseye-slim AS builder
-ENV NODEJS_MAJOR=16
+ENV NODEJS_MAJOR=18
 
 ARG DEBIAN_FRONTEND=noninteractive
 LABEL MAINTAINER="Key Networks https://key-networks.com"
