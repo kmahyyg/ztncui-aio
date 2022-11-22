@@ -1,8 +1,7 @@
-FROM debian:sid-slim AS builder
+FROM debian:bullseye-slim AS builder
 ENV NODEJS_MAJOR=18
 
 ARG DEBIAN_FRONTEND=noninteractive
-LABEL org.opencontainers.image.source="https://github.com/kmahyyg/ztncui-aio"
 LABEL MAINTAINER="Key Networks https://key-networks.com"
 LABEL Description="ztncui (a ZeroTier network controller user interface) + ZeroTier network controller"
 ADD VERSION .
@@ -23,7 +22,7 @@ RUN apt update -y && \
     zip -r /build/artifact.zip ztncui node_modules/argon2/build/Release
 
 # BUILD GO UTILS
-FROM golang:1.19.3 AS argong
+FROM golang:bullseye AS argong
 WORKDIR /buildsrc
 COPY argon2g /buildsrc/argon2g
 COPY fileserv /buildsrc/fileserv
@@ -48,7 +47,7 @@ RUN mkdir -p binaries && \
 
 
 # START RUNNER
-FROM debian:sid-slim AS runner
+FROM debian:bullseye-slim AS runner
 RUN apt update -y && \
     apt install curl gnupg2 ca-certificates unzip supervisor net-tools procps --no-install-recommends -y && \
     groupadd -g 2222 zerotier-one && \
