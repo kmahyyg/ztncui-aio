@@ -35,6 +35,7 @@ RUN apt update -y && \
     apt install curl gnupg2 ca-certificates unzip net-tools procps --no-install-recommends -y && \
     groupadd -g 2222 zerotier-one && \
     useradd -u 2222 -g 2222 zerotier-one && \
+    usermod -aG zerotier-one zerotier-one && \
     curl -sL -o zt-one.sh https://install.zerotier.com && \
     bash zt-one.sh && \
     rm -f zt-one.sh && \
@@ -61,5 +62,5 @@ EXPOSE 3180/tcp
 EXPOSE 8000/tcp
 EXPOSE 3443/tcp
 
-VOLUME ["/opt/key-networks/ztncui/etc", "/etc/ztncui-docker", "/var/lib/zerotier-one"]
+VOLUME ["/opt/key-networks/ztncui/etc", "/etc/zt-mkworld", "/var/lib/zerotier-one"]
 ENTRYPOINT [ "/usr/bin/supervisord" ]
