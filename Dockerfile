@@ -33,7 +33,7 @@ RUN bash /buildsrc/build-gobinaries.sh
 # START RUNNER
 FROM debian:bullseye-slim AS runner
 RUN apt update -y && \
-    apt install curl gnupg2 ca-certificates unzip supervisor net-tools procps --no-install-recommends -y && \
+    apt install curl gnupg2 ca-certificates unzip net-tools procps --no-install-recommends -y && \
     groupadd -g 2222 zerotier-one && \
     useradd -u 2222 -g 2222 zerotier-one && \
     curl -sL -o zt-one.sh https://install.zerotier.com && \
