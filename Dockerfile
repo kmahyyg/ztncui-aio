@@ -28,7 +28,7 @@ COPY ztnodeid /buildsrc/ztnodeid
 COPY build-gobinaries.sh /buildsrc/build-gobinaries.sh
 ENV CGO_ENABLED=0
 RUN apt update -y && \ 
-    apt install zip && \
+    apt install zip -y && \
     bash /buildsrc/build-gobinaries.sh
 
 # START RUNNER
