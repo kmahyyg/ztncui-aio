@@ -28,12 +28,19 @@ Never use `node_lts.x` as your installation script of nodejs whose version might
 
 ## Usage
 
+### Golang mkworld
+
+
+
+### Docker image
+
 ```bash
 $ git clone https://github.com/key-networks/ztncui-aio # to get a copy of denv file, otherwise make your own
 $ docker pull keynetworks/ztncui
 $ docker run -d -p3443:3443 -p3180:3180 \
     -v /mydata/ztncui:/opt/key-networks/ztncui/etc \
     -v /mydata/zt1:/var/lib/zerotier-one \
+    -v /mydata/auto-mkworld:/etc/ztncui-docker \
     --env-file ./denv <CHANGE HERE ACCORDING TO NEXT PART> \
     --name ztncui \
     keynetworks/ztncui
@@ -48,7 +55,7 @@ For ZTNCUI: https://github.com/key-networks/ztncui
 | REQUIRED | Name | Explanation | Default Value |
 |:--------:|:--------:|:--------:|:--------:|
 | YES | NODE_ENV | https://pugjs.org/api/express.html | production |
-|  no  | HTTPS_HOST | Only Listen on HTTPS_HOST:HTTPS_PORT | NO DEFAULT |
+| no | HTTPS_HOST | Only Listen on HTTPS_HOST:HTTPS_PORT | NO DEFAULT |
 | no | HTTPS_PORT | HTTPS_PORT | 3443 |
 | no | HTTP_PORT | HTTP_PORT | 3000 |
 | no | HTTP_ALL_INTERFACES | Listen on all interfaces, useful for reverse proxy, HTTP only | NO DEFAULT |
@@ -63,7 +70,7 @@ This image additional specified details:
 | no | ZTNCUI_PASSWD | generate admin password on the fly (if not exists) | password |
 | YES | MYADDR | your ip address, public ip address preferred | NO DEFAULT |
 
-Also, this image exposed an http server at port 3180, you could save file in `/mydata/ztncui/myfs/` to serve it. (You could use this to build your own root server and distribute planet file)
+Also, this image exposed an http server at port 3180, you could save file in `/mydata/ztncui/httpfs/` to serve it. (You could use this to build your own root server and distribute planet file)
 
 **WARNING: IF YOU DO NOT SET PASSWORD, YOU HAVE TO USE `docker exec -it <CONTAINER NAME> bash`, and then `cat /var/log/docker-ztncui.log` to get your random password. This is gatekeeper.**
 

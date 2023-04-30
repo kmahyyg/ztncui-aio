@@ -67,4 +67,4 @@ chown -R zerotier-one:zerotier-one /opt/key-networks/ztncui
 chmod 0755 /opt/key-networks/ztncui/ztncui
 
 unset ZTNCUI_PASSWD
-gosu zerotier-one:zerotier-one /opt/key-networks/ztncui/ztncui
+/usr/local/bin/gosu zerotier-one:zerotier-one /opt/key-networks/ztncui/ztncui

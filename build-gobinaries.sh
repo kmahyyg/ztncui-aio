@@ -19,8 +19,8 @@ cd ..
 cd fileserv 
 go build -ldflags='-s -w' -trimpath -o ../binaries/fileserv main.go 
 cd .. 
-cd ztnode-genid 
-go build -ldflags='-s -w' -trimpath -o ../binaries/ztnode-genid main.go 
-cd .. 
-cd ztnode-mkworld 
-go build -ldflags='-s -w' -trimpath -o ../binaries/ztnode-mkworld main.go
+cd ztnodeid
+go build -ldflags='-s -w' -trimpath -o ../binaries/ztmkworld cmd/mkworld/main.go
+cd ..
+cd binaries
+zip -r /buildsrc/artifact-go.zip ./*

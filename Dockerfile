@@ -1,7 +1,7 @@
 FROM debian:bullseye-slim AS jsbuilder
 ENV NODEJS_MAJOR=18
+ENV DEBIAN_FRONTEND=noninteractive
 
-ARG DEBIAN_FRONTEND=noninteractive
 LABEL org.opencontainers.image.source="https://github.com/kmahyyg/ztncui-aio"
 LABEL MAINTAINER="Key Networks https://key-networks.com"
 LABEL Description="ztncui (a ZeroTier network controller user interface) + ZeroTier network controller"
@@ -31,8 +31,14 @@ RUN bash /buildsrc/build-gobinaries.sh
 
 # START RUNNER
 FROM debian:bullseye-slim AS runner
+ENV S6_KEEP_ENV=1
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update -y && \
-    apt install curl gnupg2 ca-certificates unzip net-tools procps --no-install-recommends -y && \
+    apt install curl gnupg2 ca-certificates gzip xz-utils iproute2 unzip net-tools procps --no-install-recommends -y && \
+    curl -L -O https://github.com/just-containers/s6-overlay/releases/download/v3.1.3.0/s6-overlay-noarch.tar.xz && \
+    tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz && rm /tmp/s6-overlay-noarch.tar.xz && \
+    curl -L -O https://github.com/just-containers/s6-overlay/releases/download/v3.1.3.0/s6-overlay-x86_64.tar.xz && \
+    tar -C / -Jxpf /tmp/s6-overlay-x86_64.tar.xz && rm /tmp/s6-overlay-x86_64.tar.xz && \
     groupadd -g 2222 zerotier-one && \
     useradd -u 2222 -g 2222 zerotier-one && \
     usermod -aG zerotier-one zerotier-one && \
@@ -49,13 +55,17 @@ RUN unzip ./artifact.zip && \
     rm -f ./artifact.zip
 
 WORKDIR /
-COPY --from=gobuilder /buildsrc/gobinaries.zip /tmp/
-RUN unzip -d /usr/local/bin /tmp/gobinaries.zip && \
+COPY firsttime_init.sh /firsttime_init.sh
+COPY start_zt1.sh /start_zt1.sh
+COPY start_ztncui.sh /start_ztncui.sh
+
+COPY --from=gobuilder /buildsrc/artifact-go.zip /tmp/
+RUN unzip -d /usr/local/bin /tmp/artifact-go.zip && \
+    rm -rf /tmp/artifact-go.zip && \
     chmod 0755 /usr/local/bin/* && \
     chmod 0755 /start_*.sh
 
-COPY start_zt1.sh /start_zt1.sh
-COPY start_ztncui.sh /start_ztncui.sh
+ADD s6-rc.d /etc/s6-overlay/
 
 EXPOSE 3000/tcp
 EXPOSE 3180/tcp
@@ -63,4 +73,4 @@ EXPOSE 8000/tcp
 EXPOSE 3443/tcp
 
 VOLUME ["/opt/key-networks/ztncui/etc", "/etc/zt-mkworld", "/var/lib/zerotier-one"]
-ENTRYPOINT [ "/usr/bin/supervisord" ]
+ENTRYPOINT [ "/init" ]
