@@ -27,7 +27,9 @@ COPY fileserv /buildsrc/fileserv
 COPY ztnodeid /buildsrc/ztnodeid
 COPY build-gobinaries.sh /buildsrc/build-gobinaries.sh
 ENV CGO_ENABLED=0
-RUN bash /buildsrc/build-gobinaries.sh
+RUN apt update -y && \ 
+    apt install zip && \
+    bash /buildsrc/build-gobinaries.sh
 
 # START RUNNER
 FROM debian:bullseye-slim AS runner
