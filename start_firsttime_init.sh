@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# debugging purpose
+if [ ! -z $DEBUG_ENV ]; then
+    echo "Debugging: Print EnvVar"
+    printenv
+fi
+
 # create dest folder
 mkdir -p /etc/zt-mkworld
 
