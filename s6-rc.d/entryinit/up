@@ -1,0 +1,2 @@
+#!/command/execlineb -P
+exec /command/with-contenv bash /start_firsttime_init.sh

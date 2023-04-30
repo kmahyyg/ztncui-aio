@@ -1,0 +1,2 @@
+#!/command/with-contenv bash
+/start_zt1.sh

@@ -22,11 +22,13 @@ HTTP_ALL_INTERFACES=${HTTP_ALL_INTERFACES}
 HTTP_PORT=${HTTP_PORT:-3000}
 HTTPS_PORT=${HTTPS_PORT:-3443}
 
+echo "YOUR DOMAIN: ${MYDOMAIN}"
+
 while [ ! -f /var/lib/zerotier-one/authtoken.secret ]; do
     echo "ZT1 AuthToken is not found... Wait for ZT1 to start..."
     sleep 2
 done
-chown zerotier-one.zerotier-one /var/lib/zerotier-one/authtoken.secret
+chown zerotier-one:zerotier-one /var/lib/zerotier-one/authtoken.secret
 chmod 640 /var/lib/zerotier-one/authtoken.secret
 
 cd /opt/key-networks/ztncui
@@ -45,7 +47,7 @@ cat /opt/key-networks/ztncui/.env
 
 mkdir -p /opt/key-networks/ztncui/etc/storage 
 mkdir -p /opt/key-networks/ztncui/etc/tls
-mkdir -p /opt/key-networks/ztncui/etc/myfs # for planet files
+mkdir -p /opt/key-networks/ztncui/etc/httpfs # for planet files
 
 if [ ! -f /opt/key-networks/ztncui/etc/passwd ]; then
     echo "Default Password File Not Exists... Generating..."
@@ -58,8 +60,9 @@ if [ ! -f /opt/key-networks/ztncui/etc/tls/fullchain.pem ] || [ ! -f /opt/key-ne
     echo "Cannot detect TLS Certs, Generating..."
     cd /opt/key-networks/ztncui/etc/tls
     /usr/local/bin/minica -domains "$MYDOMAIN"
-    cp -f "$MYDOMAIN/cert.pem" fullchain.pem
+    cat "$MYDOMAIN/cert.pem" minica.pem > fullchain.pem
     cp -f "$MYDOMAIN/key.pem" privkey.pem
+    cp -f minica.pem /opt/key-networks/ztncui/etc/httpfs/ca.pem
     cd ../../
 fi
 
@@ -67,4 +70,4 @@ chown -R zerotier-one:zerotier-one /opt/key-networks/ztncui
 chmod 0755 /opt/key-networks/ztncui/ztncui
 
 unset ZTNCUI_PASSWD
-gosu zerotier-one:zerotier-one /opt/key-networks/ztncui/ztncui
+/usr/local/bin/gosu zerotier-one:zerotier-one /opt/key-networks/ztncui/ztncui
