@@ -28,11 +28,10 @@ COPY ztnodeid /buildsrc/ztnodeid
 ENV CGO_ENABLED=0
 RUN bash /buildsrc/build-gobinaries.sh
 
-
 # START RUNNER
 FROM debian:bullseye-slim AS runner
-ENV S6_KEEP_ENV=1
 ENV DEBIAN_FRONTEND=noninteractive
+ENV AUTOGEN_PLANET=0
 RUN apt update -y && \
     apt install curl gnupg2 ca-certificates gzip xz-utils iproute2 unzip net-tools procps --no-install-recommends -y && \
     curl -L -O https://github.com/just-containers/s6-overlay/releases/download/v3.1.3.0/s6-overlay-noarch.tar.xz && \
@@ -42,6 +41,7 @@ RUN apt update -y && \
     groupadd -g 2222 zerotier-one && \
     useradd -u 2222 -g 2222 zerotier-one && \
     usermod -aG zerotier-one zerotier-one && \
+    usermod -aG zerotier-one root && \
     curl -sL -o zt-one.sh https://install.zerotier.com && \
     bash zt-one.sh && \
     rm -f zt-one.sh && \
@@ -55,7 +55,7 @@ RUN unzip ./artifact.zip && \
     rm -f ./artifact.zip
 
 WORKDIR /
-COPY firsttime_init.sh /firsttime_init.sh
+COPY start_firsttime_init.sh /start_firsttime_init.sh
 COPY start_zt1.sh /start_zt1.sh
 COPY start_ztncui.sh /start_ztncui.sh
 
@@ -65,7 +65,7 @@ RUN unzip -d /usr/local/bin /tmp/artifact-go.zip && \
     chmod 0755 /usr/local/bin/* && \
     chmod 0755 /start_*.sh
 
-ADD s6-rc.d /etc/s6-overlay/
+COPY s6-rc.d /etc/s6-overlay/
 
 EXPOSE 3000/tcp
 EXPOSE 3180/tcp

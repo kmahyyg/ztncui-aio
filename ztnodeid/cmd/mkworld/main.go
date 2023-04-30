@@ -23,7 +23,7 @@ var (
 	prevkp     = make([]byte, node.ZT_C25519_PUBLIC_KEY_LEN+node.ZT_C25519_PRIVATE_KEY_LEN)
 	curkp      = make([]byte, node.ZT_C25519_PUBLIC_KEY_LEN+node.ZT_C25519_PRIVATE_KEY_LEN)
 	mConf      = &MkWorldConfig{}
-	gConfFile  = flag.String("c", "mkworld.json", "program config")
+	gConfFile  = flag.String("c", "mkworld.config.json", "program config")
 	alreadyMod = false
 )
 

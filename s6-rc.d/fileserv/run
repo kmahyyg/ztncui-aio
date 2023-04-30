@@ -1,2 +1,4 @@
 #!/command/execlineb -P
-/usr/local/bin/gfileserv
+# make sure we've got it chowned
+/bin/chown -R zerotier-one:zerotier-one /opt/key-networks/ztncui
+/usr/local/bin/gosu zerotier-one:zerotier-one /usr/local/bin/gfileserv

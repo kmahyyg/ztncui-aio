@@ -22,6 +22,8 @@ HTTP_ALL_INTERFACES=${HTTP_ALL_INTERFACES}
 HTTP_PORT=${HTTP_PORT:-3000}
 HTTPS_PORT=${HTTPS_PORT:-3443}
 
+echo "YOUR DOMAIN: ${MYDOMAIN}"
+
 while [ ! -f /var/lib/zerotier-one/authtoken.secret ]; do
     echo "ZT1 AuthToken is not found... Wait for ZT1 to start..."
     sleep 2
@@ -58,8 +60,9 @@ if [ ! -f /opt/key-networks/ztncui/etc/tls/fullchain.pem ] || [ ! -f /opt/key-ne
     echo "Cannot detect TLS Certs, Generating..."
     cd /opt/key-networks/ztncui/etc/tls
     /usr/local/bin/minica -domains "$MYDOMAIN"
-    cp -f "$MYDOMAIN/cert.pem" fullchain.pem
+    cat "$MYDOMAIN/cert.pem" minica.pem > fullchain.pem
     cp -f "$MYDOMAIN/key.pem" privkey.pem
+    cp -f minica.pem /opt/key-networks/ztncui/etc/httpfs/ca.pem
     cd ../../
 fi
 
