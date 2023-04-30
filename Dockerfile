@@ -25,6 +25,7 @@ WORKDIR /buildsrc
 COPY argon2g /buildsrc/argon2g
 COPY fileserv /buildsrc/fileserv
 COPY ztnodeid /buildsrc/ztnodeid
+COPY build-gobinaries.sh /buildsrc/build-gobinaries.sh
 ENV CGO_ENABLED=0
 RUN bash /buildsrc/build-gobinaries.sh
 
