@@ -69,7 +69,7 @@ RUN unzip -d /usr/local/bin /tmp/artifact-go.zip && \
     chmod 0755 /usr/local/bin/* && \
     chmod 0755 /start_*.sh
 
-COPY s6-rc.d /etc/s6-overlay/
+COPY s6-rc.d/ /etc/s6-overlay/
 
 EXPOSE 3000/tcp
 EXPOSE 3180/tcp
