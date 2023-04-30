@@ -33,6 +33,7 @@ RUN bash /buildsrc/build-gobinaries.sh
 FROM debian:bullseye-slim AS runner
 ENV DEBIAN_FRONTEND=noninteractive
 ENV AUTOGEN_PLANET=0
+WORKDIR /tmp
 RUN apt update -y && \
     apt install curl gnupg2 ca-certificates gzip xz-utils iproute2 unzip net-tools procps --no-install-recommends -y && \
     curl -L -O https://github.com/just-containers/s6-overlay/releases/download/v3.1.3.0/s6-overlay-noarch.tar.xz && \
