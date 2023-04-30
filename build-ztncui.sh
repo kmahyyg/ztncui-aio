@@ -26,5 +26,5 @@ case ${MACHINE_ARCHITECTURE} in
         ;;
 esac
 
-pkg -c ./package.json -C Brotli --no-bytecode --public -t "node${NODEJS_MAJOR}-linux-x64" bin/www -o ztncui
+pkg -c ./package.json -C Brotli --no-bytecode --public -t "node${NODEJS_MAJOR}-linux-${NODEJS_PACK_ARCH}" bin/www -o ztncui
 zip -r /build/artifact.zip ztncui node_modules/argon2/build/Release
