@@ -20,7 +20,15 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [
+          {name: "linux/amd64", tag: "amd64"},
+          {name: "linux/arm64/v8", tag: "aarch64"},
+          {name: "linux/arm/v7", tag: "arm32v7"}
+        ]
     permissions:
       contents: read
       packages: write
