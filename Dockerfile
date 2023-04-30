@@ -24,8 +24,7 @@ FROM golang:bullseye AS gobuilder
 WORKDIR /buildsrc
 COPY argon2g /buildsrc/argon2g
 COPY fileserv /buildsrc/fileserv
-COPY ztnode-genid /buildsrc/ztnode-genid
-COPY ztnode-mkworld /buildsrc/ztnode-mkworld
+COPY ztnodeid /buildsrc/ztnodeid
 ENV CGO_ENABLED=0
 RUN bash /buildsrc/build-gobinaries.sh
 
