@@ -194,8 +194,7 @@ jobs:
       - name: Compress all artifacts using ZSTD
         run: |
           cd /tmp/relbuild/${{ github.repository_owner }}
-          zstd -4 --rm ztncui-aio-aarch64.tar
-          zstd -4 --rm ztncui-aio-x86_64.tar
+          zstd -4 --rm *.tar
       - name: Create Release and Upload DockerImage Assets In TarGZ
         uses: Hs1r1us/Release-AIO@v2.0.0
         env:
