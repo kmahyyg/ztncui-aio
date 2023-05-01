@@ -20,11 +20,11 @@ Refer to https://github.com/key-networks/ztncui-containerized for the original d
 
 ## Build yourself
 
-We support arm64, amd64. armv7 might work, but is not tested. Others are unsupported.
+We support arm64, amd64. armv7(hf) might work, but is not tested. Others are unsupported.
 
 ```bash
 $ git clone https://github.com/key-networks/ztncui-aio
-$ docker build . -t keynetworks/ztncui:latest
+$ docker build . --build-arg OVERLAY_S6_ARCH=<one of aarch64,armhf,x86_64> -t keynetworks/ztncui:latest
 ```
 
 Change `NODEJS_MAJOR` variable in Dockerfile to use different nodejs version.
