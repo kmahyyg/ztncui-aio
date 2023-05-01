@@ -29,8 +29,7 @@ jobs:
       matrix: 
         platform: [
           {name: "linux/amd64", tag: "x86_64"},
-          {name: "linux/arm64/v8", tag: "aarch64"},
-          {name: "linux/arm/v7", tag: "armhf"}
+          {name: "linux/arm64/v8", tag: "aarch64"}
         ]
     steps:
       - name: Checkout
