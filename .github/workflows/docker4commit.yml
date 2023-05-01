@@ -1,0 +1,105 @@
+name: Docker Build
+
+on:
+  push:
+  pull_request:
+    types: 
+      - review_requested
+      - opened
+  release:
+    types: 
+      - published
+
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: ghcr.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-docker:
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix: 
+        platform: [
+          {name: "linux/amd64", tag: "amd64"},
+          {name: "linux/arm64/v8", tag: "arm64"},
+          {name: "linux/arm/v7", tag: "armv7"}
+        ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Prepare destination folder
+        run: mkdir -p /build/out
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: ${{ matrix.platform.name }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+      - name: Install CoSign
+        if: github.event_name == 'release' && github.event.action == 'published'
+        uses: sigstore/cosign-installer@main
+      - name: Login to GHCR
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          platforms: ${{ matrix.platform.name }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max,compression=zstd
+          outputs: |
+            type=docker,dest=/build/out/ztncui-aio.tar
+          push: false
+          tags: |
+            ghcr.io/${{ env.IMAGE_NAME }}:sha256-${{ github.sha }}
+      - name: Sign the Image
+        if: github.event_name == 'release' && github.event.action == 'published'
+        env:
+          COSIGN_EXPERIMENTAL: "true"
+        # This step uses the identity token to provision an ephemeral certificate
+        # against the sigstore community Fulcio instance.
+        run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }}
+      - name: Publish the Image
+        if: github.event_name == 'release' && github.event.action == 'published'
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          platforms: ${{ matrix.platform.name }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max,compression=zstd
+          push: true
+          tags: |
+            ghcr.io/${{ env.IMAGE_NAME }}:latest
+            ghcr.io/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
+      - name: Archive generated artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          retention-days: 7
+          name: ztncui-aio-${{ matrix.platform.tag }}-${{ github.sha }}
+          path: /build/out/ztncui-aio.tar
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
