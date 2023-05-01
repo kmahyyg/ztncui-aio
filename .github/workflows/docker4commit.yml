@@ -88,7 +88,7 @@ jobs:
       - name: Archive generated artifacts
         uses: actions/upload-artifact@v3
         with:
-          retention-days: 7
+          retention-days: 30
           name: ztncui-aio-${{ matrix.platform.tag }}-${{ github.sha }}
           path: /tmp/build/out/ztncui-aio.tar
       - name: Move cache
