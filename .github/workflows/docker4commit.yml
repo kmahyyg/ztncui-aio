@@ -198,4 +198,4 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref_name }}
-          asset_files: /tmp/relbuild/
+          asset_files: /tmp/relbuild/${{ github.repository_owner }}
