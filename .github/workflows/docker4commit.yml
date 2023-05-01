@@ -59,7 +59,7 @@ jobs:
           build-args: |
             OVERLAY_S6_ARCH=${{ env.platform-tag }}
           outputs: |
-            type=docker,dest=/tmp/build/out/ztncui-aio.tar
+            type=docker,dest=/tmp/build/out/ztncui-aio-${{ env.platform-tag }}.tar
           push: false
           provenance: false    # attestation need to be disabled to merge later.
           sbom: false          # attestation need to be disabled to merge later.
@@ -85,7 +85,7 @@ jobs:
         with:
           retention-days: 30
           name: ztncui-aio-${{ env.platform-tag }}-${{ github.sha }}
-          path: /tmp/build/out/ztncui-aio.tar
+          path: /tmp/build/out/ztncui-aio-${{ env.platform-tag }}.tar
       - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
@@ -132,7 +132,7 @@ jobs:
           build-args: |
             OVERLAY_S6_ARCH=${{ env.platform-tag }}
           outputs: |
-            type=docker,dest=/tmp/build/out/ztncui-aio.tar
+            type=docker,dest=/tmp/build/out/ztncui-aio-${{ env.platform-tag }}.tar
           push: false
           provenance: false    # attestation need to be disabled to merge later.
           sbom: false          # attestation need to be disabled to merge later.
@@ -159,7 +159,7 @@ jobs:
         with:
           retention-days: 30
           name: ztncui-aio-${{ env.platform-tag }}-${{ github.sha }}
-          path: /tmp/build/out/ztncui-aio.tar
+          path: /tmp/build/out/ztncui-aio-${{ env.platform-tag }}.tar
       - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
@@ -187,10 +187,15 @@ jobs:
           docker manifest push ghcr.io/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
           docker manifest create ghcr.io/${{ env.IMAGE_NAME }}:latest --amend ghcr.io/${{ env.IMAGE_NAME }}:${{ github.ref_name }}-aarch64 --amend ghcr.io/${{ env.IMAGE_NAME }}:${{ github.ref_name }}-x86_64
           docker manifest push ghcr.io/${{ env.IMAGE_NAME }}:latest
-      - name: Export Docker Image
+      - name: Download artifacts previously
+        uses: actions/download-artifact@v3
+        with:
+          path: /tmp/relbuild/${{ github.repository_owner }}
+      - name: Compress all artifacts using ZSTD
         run: |
-          docker image save ghcr.io/${{ env.IMAGE_NAME }}:${{ github.ref_name }}-aarch64 | gzip > /tmp/relbuild/${{ env.IMAGE_NAME }}-${{ github.ref_name }}-aarch64.tar.gz
-          docker image save ghcr.io/${{ env.IMAGE_NAME }}:${{ github.ref_name }}-x86_64 | gzip > /tmp/relbuild/${{ env.IMAGE_NAME }}-${{ github.ref_name }}-x86_64.tar.gz
+          cd /tmp/relbuild/${{ github.repository_owner }}
+          zstd -4 --rm ztncui-aio-aarch64.tar
+          zstd -4 --rm ztncui-aio-x86_64.tar
       - name: Create Release and Upload DockerImage Assets In TarGZ
         uses: Hs1r1us/Release-AIO@v2.0.0
         env:
