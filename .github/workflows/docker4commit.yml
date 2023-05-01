@@ -29,9 +29,9 @@ jobs:
       max-parallel: 1
       matrix: 
         platform: [
-          {name: "linux/amd64", tag: "amd64"},
-          {name: "linux/arm64/v8", tag: "arm64"},
-          {name: "linux/arm/v7", tag: "armv7"}
+          {name: "linux/amd64", tag: "x86_64"},
+          {name: "linux/arm64/v8", tag: "aarch64"},
+          {name: "linux/arm/v7", tag: "armhf"}
         ]
     steps:
       - name: Checkout
@@ -69,6 +69,8 @@ jobs:
           platforms: ${{ matrix.platform.name }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max,compression=zstd
+          build-args: |
+            OVERLAY_S6_ARCH=${{ matrix.platform.tag }}
           outputs: |
             type=docker,dest=/tmp/build/out/ztncui-aio.tar
           push: false
