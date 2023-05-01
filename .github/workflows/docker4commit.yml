@@ -39,7 +39,7 @@ jobs:
         with:
           submodules: true
       - name: Prepare destination folder
-        run: mkdir -p /build/out
+        run: mkdir -p /tmp/build/out
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
         with:
@@ -70,7 +70,7 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max,compression=zstd
           outputs: |
-            type=docker,dest=/build/out/ztncui-aio.tar
+            type=docker,dest=/tmp/build/out/ztncui-aio.tar
           push: false
           tags: |
             ghcr.io/${{ env.IMAGE_NAME }}:sha256-${{ github.sha }}
@@ -98,7 +98,7 @@ jobs:
         with:
           retention-days: 7
           name: ztncui-aio-${{ matrix.platform.tag }}-${{ github.sha }}
-          path: /build/out/ztncui-aio.tar
+          path: /tmp/build/out/ztncui-aio.tar
       - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
