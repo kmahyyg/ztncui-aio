@@ -120,7 +120,7 @@ This image additional specified details:
 Also, this image exposed an http server at port 3180, you could save file in `/mydata/ztncui/httpfs/` to serve it. 
 (You could use this to build your own root server and distribute planet file, even though, that won't hurt you, I still suggest to set a protection for this http server in front)
 
-**WARNING: IF YOU DO NOT SET PASSWORD, YOU HAVE TO USE `docker exec -it <CONTAINER NAME> bash`, and then `cat /var/log/docker-ztncui.log` to get your random password. This is gatekeeper.**
+**WARNING: IF YOU DO NOT SET PASSWORD, YOU HAVE TO USE `docker exec -it <CONTAINER NAME> bash`, and then `docker container logs <CONTAINER_NAME / CONTAINER_ID>` to get your random password. This is gatekeeper.**
 
 ## Chinese users only
 
