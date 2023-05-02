@@ -84,7 +84,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           retention-days: 30
-          name: ztncui-aio-${{ env.platform-tag }}-${{ github.sha }}
+          name: ztncui-aio-${{ env.platform-tag }}-${{ github.sha }}.tar
           path: /tmp/build/out/ztncui-aio-${{ env.platform-tag }}.tar
       - name: Move cache
         run: |
@@ -122,7 +122,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build Docker image
-        if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
         uses: docker/build-push-action@v4
         with:
           context: .
@@ -155,10 +154,9 @@ jobs:
             ghcr.io/${{ env.IMAGE_NAME }}:${{ github.ref_name }}-${{ env.platform-tag }}
       - name: Archive generated artifacts
         uses: actions/upload-artifact@v3
-        if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
         with:
           retention-days: 30
-          name: ztncui-aio-${{ env.platform-tag }}-${{ github.sha }}
+          name: ztncui-aio-${{ env.platform-tag }}-${{ github.sha }}.tar
           path: /tmp/build/out/ztncui-aio-${{ env.platform-tag }}.tar
       - name: Move cache
         run: |
@@ -200,6 +198,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          body: Regular update, check commit history for changelog.
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref_name }}
           asset_files: /tmp/relbuild/${{ github.repository_owner }}
