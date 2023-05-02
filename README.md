@@ -83,7 +83,7 @@ The configuration JSON can be understand like this:
 $ git clone https://github.com/kmahyyg/ztncui-aio # to get a copy of denv file, otherwise make your own
 $ docker pull ghcr.io/kmahyyg/ztncui-aio
 $ docker run -d -p3443:3443 -p3180:3180 -p9993:9993/udp \
-    -v /mydata/ztncui:/opt/key-networks/ztncui/etc \  
+    -v /mydata/ztncui:/opt/key-networks/ztncui/etc \
     -v /mydata/zt1:/var/lib/zerotier-one \
     -v /mydata/zt-mkworld-conf:/etc/zt-mkworld \
     --env-file ./denv <CHANGE THIS FILE ACCORDING TO NEXT PART> \
@@ -109,6 +109,10 @@ Set the following environment variable when create the container, and according 
 
 Note: If you do NOT set `HTTP_ALL_INTERFACES`, the 3000 port will only get listened inside container.
 
+This application does NOT have a built-in protection mechanism against brute-force attack, you should NOT directly expose it on the internet.
+
+And you should ALWAYS NOT use a weak password.
+
 Set the following environment variable when create the container, and according to your needs:
 
 | MANDATORY | Name | Explanation | Default Value |
@@ -118,9 +122,11 @@ Set the following environment variable when create the container, and according 
 | YES | MYADDR | your ip address, public ip address preferred, will auto-detect if not set | NO DEFAULT |
 
 Also, this image exposed an http server at port 3180, you could save file in `/mydata/ztncui/httpfs/` to serve it. 
-(You could use this to build your own root server and distribute planet file, even though, that won't hurt you, I still suggest to set a protection for this http server in front)
+(You could use this to build your own root server and distribute planet file, even though, that won't hurt you, I still suggest to set a protection for both http server in front.)
 
 **WARNING: IF YOU DO NOT SET PASSWORD, YOU HAVE TO USE `docker container logs <CONTAINER_NAME / CONTAINER_ID>` to get your random password. This is a gatekeeper.**
+
+To reset password of ztncui: delete file under `/mydata/ztncui/passwd` and set the environment variable to the password you want, then re-create the container. After application has been initialized, the password should only be changed on the web page.
 
 ## Chinese users only
 
