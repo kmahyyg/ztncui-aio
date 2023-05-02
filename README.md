@@ -122,11 +122,11 @@ Set the following environment variable when create the container, and according 
 | YES | MYADDR | your ip address, public ip address preferred, will auto-detect if not set | NO DEFAULT |
 
 Also, this image exposed an http server at port 3180, you could save file in `/mydata/ztncui/httpfs/` to serve it. 
-(You could use this to build your own root server and distribute planet file, even though, that won't hurt you, I still suggest to set a protection for both http server in front.)
+(You could use this to build your own root server and distribute planet file, even though, that won't hurt you, I still suggest to set a protection for both http servers in front.)
 
 **WARNING: IF YOU DO NOT SET PASSWORD, YOU HAVE TO USE `docker container logs <CONTAINER_NAME / CONTAINER_ID>` to get your random password. This is a gatekeeper.**
 
-To reset password of ztncui: delete file under `/mydata/ztncui/passwd` and set the environment variable to the password you want, then re-create the container. After application has been initialized, the password should only be changed on the web page.
+To reset password of ztncui: delete file under `/mydata/ztncui/passwd` and set the environment variable to the password you want, then re-create the container. After application has been initialized, the password should ONLY be changed from the web page.
 
 ## Chinese users only
 
