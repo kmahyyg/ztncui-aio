@@ -84,7 +84,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           retention-days: 30
-          name: ztncui-aio-${{ env.platform-tag }}-${{ github.sha }}.tar
+          name: dir-ztncui-aio-${{ env.platform-tag }}
           path: /tmp/build/out/ztncui-aio-${{ env.platform-tag }}.tar
       - name: Move cache
         run: |
@@ -156,7 +156,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           retention-days: 30
-          name: ztncui-aio-${{ env.platform-tag }}-${{ github.sha }}.tar
+          name: dir-ztncui-aio-${{ env.platform-tag }}
           path: /tmp/build/out/ztncui-aio-${{ env.platform-tag }}.tar
       - name: Move cache
         run: |
@@ -192,7 +192,9 @@ jobs:
       - name: Compress all artifacts using ZSTD
         run: |
           cd /tmp/relbuild/${{ github.repository_owner }}
+          mv ./dir-ztncui-*/*.tar .
           zstd -4 --rm *.tar
+          rm -rf ./dir-ztncui-*
       - name: Create Release and Upload DockerImage Assets In TarGZ
         uses: Hs1r1us/Release-AIO@v2.0.0
         env:
