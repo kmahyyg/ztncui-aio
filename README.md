@@ -35,7 +35,7 @@ Never use `node_lts.x` as your installation script of nodejs whose version might
 
 ## Usage
 
-### Golang auto-mkworld
+### Golang auto-mkworld (already embedded in docker image)
 
 This feature allows you to generate a planet file without using C code and compiler.
 
@@ -120,7 +120,7 @@ Set the following environment variable when create the container, and according 
 Also, this image exposed an http server at port 3180, you could save file in `/mydata/ztncui/httpfs/` to serve it. 
 (You could use this to build your own root server and distribute planet file, even though, that won't hurt you, I still suggest to set a protection for this http server in front)
 
-**WARNING: IF YOU DO NOT SET PASSWORD, YOU HAVE TO USE `docker exec -it <CONTAINER NAME> bash`, and then `docker container logs <CONTAINER_NAME / CONTAINER_ID>` to get your random password. This is gatekeeper.**
+**WARNING: IF YOU DO NOT SET PASSWORD, YOU HAVE TO USE `docker container logs <CONTAINER_NAME / CONTAINER_ID>` to get your random password. This is a gatekeeper.**
 
 ## Chinese users only
 
