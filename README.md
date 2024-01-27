@@ -2,7 +2,7 @@
 
 ![](https://github.com/kmahyyg/ztncui-aio/actions/workflows/docker4commit.yml/badge.svg)
 
-Current Version: 20230501-1.10.6-0.8.13
+Current Version: 20240127-1.12.2-0.8.14
 
 ## From ztncui author
 
@@ -28,6 +28,8 @@ Others are unsupported.
 $ git clone https://github.com/kmahyyg/ztncui-aio
 $ docker build . --build-arg OVERLAY_S6_ARCH=<one of aarch64,x86_64> -t ghcr.io/kmahyyg/ztncui-aio:latest
 ```
+
+> Why not directly detect CPU arch? Some kernel may use non-standard expression of architecture.
 
 Change `NODEJS_MAJOR` variable in Dockerfile to use different nodejs version.
 
