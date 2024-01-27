@@ -29,6 +29,8 @@ $ git clone https://github.com/kmahyyg/ztncui-aio
 $ docker build . --build-arg OVERLAY_S6_ARCH=<one of aarch64,x86_64> -t ghcr.io/kmahyyg/ztncui-aio:latest
 ```
 
+> Why not directly detect CPU arch? Some kernel may use non-standard expression of architecture.
+
 Change `NODEJS_MAJOR` variable in Dockerfile to use different nodejs version.
 
 Never use `node_lts.x` as your installation script of nodejs whose version might changed without further notice due to time shift.
