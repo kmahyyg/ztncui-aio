@@ -19,7 +19,7 @@ env:
 
 jobs:
   build-amd64-docker:
-    runs-on: buildjet-4vcpu-ubuntu-2204
+    runs-on: ubuntu-22.04
     env:
       platform-name: "linux/amd64"
       platform-tag: "x86_64"
@@ -30,14 +30,10 @@ jobs:
           submodules: true
       - name: Prepare destination folder
         run: mkdir -p /tmp/build/out
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-        with:
-          platforms: ${{ env.platform-name }}
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Cache Docker layers
-        uses: buildjet/cache@v3
+        uses: actions/cache@v4
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ github.sha }}
@@ -102,10 +98,6 @@ jobs:
           submodules: true
       - name: Prepare destination folder
         run: mkdir -p /tmp/build/out
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-        with:
-          platforms: ${{ env.platform-name }}
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Cache Docker layers
@@ -167,7 +159,7 @@ jobs:
       - build-amd64-docker
       - build-arm64-docker
     if: ${{ startsWith(github.ref, 'refs/tags/v') }}
-    runs-on: buildjet-4vcpu-ubuntu-2204
+    runs-on: ubuntu-22.04
     steps:
       # note: change the repository_owner to specific one if post to other repos
       - name: Prepare for release
