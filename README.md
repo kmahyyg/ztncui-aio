@@ -104,8 +104,8 @@ Set the following environment variable when create the container, and according 
 | MANDATORY | Name | Explanation | Default Value |
 |:--------:|:--------:|:--------:|:--------:|
 | YES | NODE_ENV | https://pugjs.org/api/express.html | production |
-| no | HTTPS_HOST | Only Listen on HTTPS_HOST:HTTPS_PORT | NO DEFAULT |
-| no | HTTPS_PORT | HTTPS_PORT | 3443 |
+| no | HTTPS_HOST | HTTPS_HOST | NO DEFAULT, MEANS DISABLED |
+| no | HTTPS_PORT | HTTPS_PORT | NO DEFAULT, MEANS DISABLED |
 | no | HTTP_PORT | HTTP_PORT | 3000 |
 | no | HTTP_ALL_INTERFACES | Listen on all interfaces, useful for reverse proxy, HTTP only | NO DEFAULT |
 
@@ -123,12 +123,20 @@ Set the following environment variable when create the container, and according 
 | no | ZTNCUI_PASSWD | generate admin password on the fly (if not exists) | password |
 | YES | MYADDR | your ip address, public ip address preferred, will auto-detect if not set | NO DEFAULT |
 
-Also, this image exposed an http server at port 3180, you could save file in `/mydata/ztncui/httpfs/` to serve it. 
-(You could use this to build your own root server and distribute planet file, even though, that won't hurt you, I still suggest to set a protection for both http servers in front.)
 
 **WARNING: IF YOU DO NOT SET PASSWORD, YOU HAVE TO USE `docker container logs <CONTAINER_NAME / CONTAINER_ID>` to get your random password. This is a gatekeeper.**
 
 To reset password of ztncui: delete file under `/mydata/ztncui/passwd` and set the environment variable to the password you want, then re-create the container. After application has been initialized, the password should ONLY be changed from the web page.
+
+## Public File Server
+
+| MANDATORY | Name | Explanation | Default Value |
+|:--------:|:--------:|:--------:|:--------:|
+| no | PLANET_RETR_PUBLIC | File server listened globally or only local | NO DEFAULT |
+
+If `PLANET_RETR_PUBLIC` is set, then file server will listen on `0.0.0.0`, otherwise, `127.0.0.1` .
+This image exposed an http server at port 3180, you could save file in `/mydata/ztncui/httpfs/` to serve it. 
+(You could use this to build your own root server and distribute planet file, even though, that won't hurt you, I still suggest to set a protection for both http servers in front.)
 
 ## Chinese users only
 
