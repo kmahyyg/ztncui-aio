@@ -2,7 +2,7 @@
 
 ![](https://github.com/kmahyyg/ztncui-aio/actions/workflows/docker4commit.yml/badge.svg)
 
-Current Version: 20240127-1.12.2-0.8.14
+Current Version: 20240503-1.12.2-0.8.14
 
 ## From ztncui author
 
@@ -109,7 +109,7 @@ Set the following environment variable when create the container, and according 
 | no | HTTP_PORT | HTTP_PORT | 3000 |
 | no | HTTP_ALL_INTERFACES | Listen on all interfaces, useful for reverse proxy, HTTP only | NO DEFAULT |
 
-Note: If you do NOT set `HTTP_ALL_INTERFACES`, the 3000 port will only get listened inside container.
+Note: If you do NOT set `HTTP_ALL_INTERFACES`, the 3000 port will only get listened inside container, means `127.0.0.1:3000` by default.
 
 This application does NOT have a built-in protection mechanism against brute-force attack, you should NOT directly expose it on the internet.
 
