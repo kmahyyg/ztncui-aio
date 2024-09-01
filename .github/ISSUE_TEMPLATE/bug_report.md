@@ -7,6 +7,9 @@ assignees: ''
 
 ---
 
+- [ ] | I confirm I've searched the internet using Google and read the [official document of Zerotier](https://docs.zerotier.com/) thoroughly.
+- [ ] | I've acknowledged that this issue tracker will ONLY support issue coming from Docker packaging itself, rather than Zerotier client.
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
