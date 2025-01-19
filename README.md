@@ -2,12 +2,11 @@
 
 ![](https://github.com/kmahyyg/ztncui-aio/actions/workflows/docker4commit.yml/badge.svg)
 
-Current Version: 20240503-1.12.2-0.8.14
+Current Version: 20250119-1.14.1-0.8.14
 
 ## From ztncui author
 
 Say a huge thank you to their work!
-
 ### ZeroTier network controller user interface in a Docker container
 
 This is to build a Docker image that contains **[ZeroTier One](https://www.zerotier.com/download.shtml)** and **[ztncui](https://key-networks.com/ztncui)** to set up a **standalone ZeroTier network controller** with a web user interface in a container.
