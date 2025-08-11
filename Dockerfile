@@ -38,9 +38,9 @@ ARG OVERLAY_S6_ARCH
 WORKDIR /tmp
 RUN apt update -y && \
     apt install curl gnupg2 ca-certificates gzip xz-utils iproute2 unzip net-tools procps --no-install-recommends -y && \
-    curl -L -O https://github.com/just-containers/s6-overlay/releases/download/v3.1.3.0/s6-overlay-noarch.tar.xz && \
+    curl -L -O https://github.com/just-containers/s6-overlay/releases/download/v3.2.1.0/s6-overlay-noarch.tar.xz && \
     tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz && rm /tmp/s6-overlay-noarch.tar.xz && \
-    curl -L -O https://github.com/just-containers/s6-overlay/releases/download/v3.1.3.0/s6-overlay-$OVERLAY_S6_ARCH.tar.xz && \
+    curl -L -O https://github.com/just-containers/s6-overlay/releases/download/v3.2.1.0/s6-overlay-$OVERLAY_S6_ARCH.tar.xz && \
     tar -C / -Jxpf /tmp/s6-overlay-$OVERLAY_S6_ARCH.tar.xz && rm /tmp/s6-overlay-$OVERLAY_S6_ARCH.tar.xz && \
     groupadd -g 2222 zerotier-one && \
     useradd -u 2222 -g 2222 zerotier-one && \

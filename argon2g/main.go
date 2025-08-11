@@ -4,10 +4,9 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
-	"math/rand"
-	"time"
+	mrand "math/rand"
+	crand "crypto/rand"
 	"os"
 
 	"golang.org/x/crypto/argon2"
@@ -26,10 +25,9 @@ type PasswdDef struct {
 const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
 
 func RandStringBytes(n int) string {
-	rand.Seed(time.Now().UnixNano())
 	b := make([]byte, n)
 	for i := range b {
-		b[i] = letterBytes[rand.Intn(len(letterBytes))] // It's not safe for password purpose, but i'm lazy.
+		b[i] = letterBytes[mrand.Intn(len(letterBytes))] // It's not safe for password purpose, but i'm lazy.
 	}
 	return string(b)
 }
@@ -49,7 +47,7 @@ func main() {
 	var ag2_hashlen uint32 = 32
 
 	ag2_salt := make([]byte, ag2_saltlen)
-	_, err := rand.Read(ag2_salt)
+	_, err := crand.Read(ag2_salt)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -72,7 +70,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = ioutil.WriteFile("passwd", v1, 0644)
+	err = os.WriteFile("passwd", v1, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
