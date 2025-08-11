@@ -2,7 +2,7 @@
 
 ![](https://github.com/kmahyyg/ztncui-aio/actions/workflows/docker4commit.yml/badge.svg)
 
-Current Version: 20250119-1.14.1-0.8.14
+Current Version: 20250811-1.14.2-0.8.14
 
 ## From ztncui author
 
