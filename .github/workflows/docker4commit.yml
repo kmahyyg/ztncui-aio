@@ -36,9 +36,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          key: ${{ runner.os }}-buildx-${{ github.ref_name }}-${{ env.platform-tag }}
           restore-keys: |
-            ${{ runner.os }}-buildx-
+            ${{ runner.os }}-buildx-${{ github.ref_name }}-${{ env.platform-tag }}
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
@@ -104,9 +104,9 @@ jobs:
         uses: buildjet/cache@v3
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          key: ${{ runner.os }}-buildx-${{ github.ref_name }}-${{ env.platform-tag }}
           restore-keys: |
-            ${{ runner.os }}-buildx-
+            ${{ runner.os }}-buildx-${{ github.ref_name }}-${{ env.platform-tag }}
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
