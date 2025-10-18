@@ -19,14 +19,14 @@ COPY build-ztncui.sh /build/
 RUN bash /build/build-ztncui.sh
 
 # BUILD GO UTILS
-FROM golang:bullseye AS gobuilder
+FROM golang:1.25-bookworm AS gobuilder
 WORKDIR /buildsrc
 COPY argon2g /buildsrc/argon2g
 COPY fileserv /buildsrc/fileserv
 COPY ztnodeid /buildsrc/ztnodeid
 COPY build-gobinaries.sh /buildsrc/build-gobinaries.sh
 ENV CGO_ENABLED=0
-RUN apt update -y && \ 
+RUN apt update -y && \
     apt install zip -y && \
     bash /buildsrc/build-gobinaries.sh
 
