@@ -1,0 +1,3 @@
+[submodule "ztnodeid"]
+	path = ztnodeid
+	url = https://github.com/kmahyyg/ztnodeid-go
