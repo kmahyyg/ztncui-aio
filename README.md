@@ -4,6 +4,26 @@
 
 Current Version: 20250811-1.14.2-0.8.14
 
+> [!IMPORTANT]
+> This repository now is in archive status and won't be updated anymore. Thank you for all your support!
+> 
+> This is because of new release of ZeroTier client (1.16.0) on 2025/08/21,
+> 
+> From https://github.com/zerotier/ZeroTierOne/blob/dev/RELEASE-NOTES.md :
+> Since 1.16.0, Default binary builds no longer contain the controller.
+> The network controller `(controller/)` source code of ZeroTier One is now under a commercial source-available license.
+>
+> From https://github.com/zerotier/ZeroTierOne/blob/dev/nonfree/LICENSE.md :
+> "Commercial Use" includes, but is not limited to:
+> - Offering paid or unpaid services powered by the Software
+> - Incorporation of the Software into any paid or unpaid product, platform, distribution or service
+>
+> As the license agreement changed, we won't be able to provide you with future updates.
+>
+> I recommend to switch to other alternatives such as Tailscale, especially after they released https://tailscale.com/blog/peer-relays-beta 
+>
+> The author personally wouldn't recommend EasyTier due to multiple security concerns.
+
 ## From ztncui author
 
 Say a huge thank you to their work!
